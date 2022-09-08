@@ -1,14 +1,18 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { useDispatch } from 'react-redux'
 
 import useStyles from './styles'
 import Input from './input'
+import jwt_decode from 'jwt-decode'
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const dispatch = useDispatch();
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
@@ -23,6 +27,17 @@ const Auth = () => {
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
     handleShowPassword(false);
+  }
+
+  const createOrGetUser = async (res) => {
+    const result = res?.credential;
+    const decoded = jwt_decode(result);
+
+    try {
+        dispatch({ type: 'AUTH', data: decoded})
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   return (
@@ -75,6 +90,10 @@ const Auth = () => {
                 <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
                 </Button>
+                <GoogleLogin 
+                    onSuccess={(response) => createOrGetUser(response)}
+                    onError={() => console.log('Error')}
+                />
                 <Grid container justify="flex-end">
                     <Grid item>
                         <Button onClick={switchMode}>
@@ -86,6 +105,9 @@ const Auth = () => {
                 </Grid>
             </form>
         </Paper>
+        <Button onClick={googleLogout()}>
+            Logout
+        </Button>
 
     </Container>
   )
