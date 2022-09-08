@@ -3,6 +3,7 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import { GoogleLogin, googleLogout } from '@react-oauth/google'
 import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import useStyles from './styles'
 import Input from './input'
@@ -13,6 +14,7 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
@@ -34,7 +36,8 @@ const Auth = () => {
     const decoded = jwt_decode(result);
 
     try {
-        dispatch({ type: 'AUTH', data: decoded})
+        dispatch({ type: 'AUTH', data: decoded })
+        history.push('/');
     } catch (error) {
         console.log(error)
     }
@@ -105,10 +108,6 @@ const Auth = () => {
                 </Grid>
             </form>
         </Paper>
-        <Button onClick={googleLogout()}>
-            Logout
-        </Button>
-
     </Container>
   )
 }
