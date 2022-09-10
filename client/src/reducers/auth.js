@@ -1,5 +1,5 @@
 // import { googleLogout } from '@react-oauth/google';
-import { AUTH, LOGOUT } from '../constants/actionTypes'
+import { AUTH, AUTH2, LOGOUT } from '../constants/actionTypes'
 
 
 const authReducer = (state = { authData: null }, action) => {
@@ -7,6 +7,9 @@ const authReducer = (state = { authData: null }, action) => {
         case AUTH:
             localStorage.setItem('profile', JSON.stringify({ ...action?.data }))
             return { ...state, authData: action?.data};
+        case AUTH2:
+            localStorage.setItem('profile', JSON.stringify({ ...action?.data.result }))
+            return { ...state, authData: action?.data.result};
         case LOGOUT:
             // googleLogout();
             localStorage.clear();

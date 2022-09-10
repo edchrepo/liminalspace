@@ -1,4 +1,4 @@
-import { AUTH } from '../constants/actionTypes';
+import { AUTH2 } from '../constants/actionTypes';
 import * as api from '../api';
 
 //async (dispatch) syntax for redux thunk
@@ -7,7 +7,7 @@ export const signin = (formData, history) => async (dispatch) => {
         // log in the user ..
         const { data } = await api.signIn(formData);
         
-        dispatch({ type: AUTH, data });
+        dispatch({ type: AUTH2, data });
 
         history.push('/')
     } catch (error) {
@@ -20,7 +20,7 @@ export const signup = (formData, history) => async (dispatch) => {
         // sign up the user ..
         const { data } = await api.signUp(formData);
         
-        dispatch({ type: AUTH, data });
+        dispatch({ type: AUTH2, data });
 
         history.push('/')
     } catch (error) {
