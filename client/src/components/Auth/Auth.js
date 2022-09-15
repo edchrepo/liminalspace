@@ -42,11 +42,11 @@ const Auth = () => {
   }
 
   const createOrGetUser = async (res) => {
-    const result = res?.credential;
-    const decoded = jwt_decode(result);
+    const token = res?.credential; // the token
+    const result = jwt_decode(token);
 
     try {
-        dispatch({ type: 'AUTH', data: decoded })
+        dispatch({ type: 'AUTH', data: { result, token }})
         history.push('/');
     } catch (error) {
         console.log(error)
