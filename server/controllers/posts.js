@@ -14,6 +14,27 @@ export const getPosts = async (req, res) => {
     }
 }
 
+//QUERY -> /posts?page=1 -> page = 1
+//PARAMS -> /posts/:id -> /posts/123 -> id = 123 
+//query used for queries (search), params used for getting specific resource
+
+export const getPostsBySearch = async (req, res) => {
+    const { searchQuery, tags } = req.query
+
+    try {
+        const title = new RegExp(searchQuery, 'i'); // Test test TEST -> test ('i' ignore case)
+
+        //find title or tags with $or
+        //is one of the tags in the array of tags equal to our tags
+        const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
+
+        //send res back to frontend
+        res.json({ data: posts });
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+}
+
 export const createPost = async (req, res) => {
     const post = req.body;
 
