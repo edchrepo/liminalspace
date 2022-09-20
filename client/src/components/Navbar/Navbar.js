@@ -4,7 +4,8 @@ import { AppBar, Avatar, Typography, Toolbar, Button } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 
-import memories from '../../images/memories.png';
+import liminalText from '../../images/liminalText.png';
+import liminalLogo from '../../images/liminalLogo.png';
 import useStyles from './styles';
 
 const Navbar = () => {
@@ -37,10 +38,10 @@ const Navbar = () => {
 
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
-        <div className={classes.brandContainer}>
-            <Typography component={Link} to="/" className={classes.heading} variant="h2" align="center">Memories</Typography>
-            <img className={classes.image} src={memories} alt="memories" height="60"/>
-        </div>
+        <Link to="/" className={classes.brandContainer}>
+            <img src={liminalText} alt="icon" height="45px" />
+            <img className={classes.image} src={liminalLogo} alt="icon" height="40px"/>
+        </Link>
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>
