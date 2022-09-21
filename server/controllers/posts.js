@@ -16,7 +16,6 @@ export const getPosts = async (req, res) => {
         //newest post first and limits to limited number of posts, skip to the startIndex
         const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
 
-        console.log("PASSSED")
         res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message });
