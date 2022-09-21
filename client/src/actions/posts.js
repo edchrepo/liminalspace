@@ -3,9 +3,11 @@ import * as api from '../api';
 
 // Action Creators
 // redux thunk for async actions
-export const getPosts = () => async (dispatch) => {
+export const getPosts = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPosts();
+        const { data } = await api.fetchPosts(page);
+
+        console.log(data);
         dispatch({ type: FETCH_ALL, payload: data });
     } catch (error) {
         console.log(error.message);
