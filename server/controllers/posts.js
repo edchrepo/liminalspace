@@ -5,10 +5,19 @@ import PostMessage from '../models/postMessage.js';
 
 //async because .find in PostMessage (finding something in model) takes time, we wait for it
 export const getPosts = async (req, res) => {
+    const { page } = req.query;
     try {
-        const postMessages = await PostMessage.find();
+        const LIMIT = 4;
+        //convert page back to number since it is first a string in req
+        // get the starting index of every page
+        const startIndex = (Number(page) - 1) * LIMIT;
+        const total = await PostMessage.countDocuments({});
 
-        res.status(200).json(postMessages);
+        //newest post first and limits to limited number of posts, skip to the startIndex
+        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex);
+
+        console.log("PASSSED")
+        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) });
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
