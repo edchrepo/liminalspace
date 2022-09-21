@@ -1,28 +1,56 @@
 import React, { useState } from 'react'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { GoogleLogin, googleLogout } from '@react-oauth/google'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import useStyles from './styles'
 import Input from './input'
+import jwt_decode from 'jwt-decode'
+import { signin, signup } from '../../actions/auth'
+
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: ''};
 
 const Auth = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword)
 
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault(); //add on submit to avoid reloads
+    
+    if(isSignup) {
+        dispatch(signup(formData, history))
+    } else {
+        dispatch(signin(formData, history))       
+    }
   };
 
-  const handleChange = () => {
-      
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })    
   };
 
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
+  }
+
+  const createOrGetUser = async (res) => {
+    const token = res?.credential; // the token
+    const result = jwt_decode(token);
+
+    try {
+        dispatch({ type: 'AUTH', data: { result, token }})
+        history.push('/');
+    } catch (error) {
+        console.log(error)
+    }
   }
 
   return (
@@ -75,6 +103,10 @@ const Auth = () => {
                 <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                     {isSignup ? 'Sign Up' : 'Sign In'}
                 </Button>
+                <GoogleLogin 
+                    onSuccess={(response) => createOrGetUser(response)}
+                    onError={() => console.log('Error')}
+                />
                 <Grid container justify="flex-end">
                     <Grid item>
                         <Button onClick={switchMode}>
@@ -86,7 +118,6 @@ const Auth = () => {
                 </Grid>
             </form>
         </Paper>
-
     </Container>
   )
 }

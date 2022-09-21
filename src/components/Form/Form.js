@@ -10,12 +10,13 @@ import useStyles from './styles';
 
 const Form = ({ currentId, setCurrentId }) => {
     const [postData, setPostData] = useState({
-        creator: '', title: '', message: '', tags: '', selectedFile: ''
+        title: '', message: '', tags: '', selectedFile: ''
     });
     const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
     //find post that has same id as currentId, if no current id return null. Find method returns singular post
     const classes = useStyles();
     const dispatch = useDispatch();
+    const user = JSON.parse(localStorage.getItem('profile'));
 
     useEffect(() => {
         if(post) setPostData(post);
@@ -25,9 +26,9 @@ const Form = ({ currentId, setCurrentId }) => {
         e.preventDefault(); //always include to prevent refresh from browser
 
         if(currentId) {//if not null update, not create, a post
-            dispatch(updatePost(currentId, postData));
+            dispatch(updatePost(currentId, ({ ...postData, name: user?.result?.given_name })));
         } else { 
-            dispatch(createPost(postData));
+            dispatch(createPost({ ...postData, name: user?.result?.given_name }));
         }
 
         clear();
@@ -35,21 +36,23 @@ const Form = ({ currentId, setCurrentId }) => {
 
     const clear = () => {
         setCurrentId(null);
-        setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+        setPostData({ title: '', message: '', tags: '', selectedFile: '' });
+    }
+
+    if(!user?.result?.given_name) {
+        return (
+            <Paper className={classes.paper}>
+                <Typography variant="h6" align="center">
+                    Please Sign In to add your Liminal Space and like other's Liminal Spaces.
+                </Typography>
+            </Paper>
+        )
     }
 
     return (
-        <Paper className={classes.paper}>
+        <Paper className={classes.paper} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
             <Typography variant="h6">{ currentId ? 'Editing' : 'Creating' } a Memory</Typography>
-            <TextField 
-                name="creator" 
-                variant="outlined" 
-                label="Creator" 
-                fullWidth
-                value={postData.creator}
-                onChange={(e) => setPostData({ ...postData, creator: e.target.value })}
-            />
             <TextField 
                 name="title" 
                 variant="outlined" 
