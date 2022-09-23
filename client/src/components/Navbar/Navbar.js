@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import { AppBar, Avatar, Typography, Toolbar, Button } from '@material-ui/core';
+import PersonIcon from '@material-ui/icons/Person';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
 
@@ -43,7 +44,9 @@ const Navbar = () => {
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>
-                    <Avatar className={classes.purple} alt={user.result.picture} src={user.result.picture}>{user.result.given_name}</Avatar>
+                    <Avatar className={classes.purple} alt={user.result.picture} src={user.result.picture}>
+                        {!user.result.picture && <PersonIcon />}
+                    </Avatar>
                     <Typography className={classes.userName} variant="h6">{user.result.given_name}</Typography>
                     <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>
                 </div>
