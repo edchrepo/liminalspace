@@ -60,7 +60,7 @@ const Home = () => {
                         <TextField 
                             name="search" 
                             variant="outlined" 
-                            label="Search Memories"
+                            label="Search Liminal Spaces"
                             onKeyPress={handleKeyPress}
                             fullWidth
                             value={search}

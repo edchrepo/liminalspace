@@ -4,7 +4,8 @@ export default makeStyles((theme) => ({
   media: {
     borderRadius: '20px',
     objectFit: 'cover',
-    width: '100%',
+    width: '50vh',
+    height: '50vh',
     maxHeight: '600px',
 
   },
