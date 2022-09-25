@@ -22,7 +22,7 @@ const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
-            <GoogleOAuthProvider clientId="649002992069-8qglqg6qouog2s89kj716ljln33segta.apps.googleusercontent.com">
+            <GoogleOAuthProvider clientId={`${process.env.REACT_APP_GOOGLEID}`}>
                 <BrowserRouter>
                     <Container maxwidth="xl">
                             <Navbar mode={darkMode} change={() => setDarkMode(!darkMode)}/>
