@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom'
-import { AppBar, Avatar, Typography, Toolbar, Button } from '@material-ui/core';
+import { AppBar, Avatar, Typography, Toolbar, Button, Switch } from '@material-ui/core';
 import PersonIcon from '@material-ui/icons/Person';
 import { useDispatch } from 'react-redux';
 import decode from 'jwt-decode';
@@ -9,7 +9,7 @@ import liminalText from '../../images/liminalText.png';
 import liminalLogo from '../../images/liminalLogo.png';
 import useStyles from './styles';
 
-const Navbar = () => {
+const Navbar = ( { mode, change} ) => {
     const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
     const dispatch = useDispatch();
@@ -41,6 +41,13 @@ const Navbar = () => {
             <img src={liminalText} alt="icon" height="45px" />
             <img className={classes.image} src={liminalLogo} alt="icon" height="40px"/>
         </Link>
+        <Switch 
+            defaultChecked
+            color="default"
+            inputProps={{'aria-label': 'checkbox with default color'}}
+            onChange={change}
+            checked={mode}
+        />
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>

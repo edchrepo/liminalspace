@@ -1,5 +1,6 @@
-import React from 'react';
-import { Container} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Container, CssBaseline } from '@material-ui/core'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -10,23 +11,32 @@ import Auth from './components/Auth/Auth'
 
 const App = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
+    const [darkMode, setDarkMode] = useState(true)
+
+    const theme=createMuiTheme({
+        palette: {
+            type: darkMode ? "dark" : "light",
+        }
+    })
 
     return (
-        <GoogleOAuthProvider clientId="649002992069-8qglqg6qouog2s89kj716ljln33segta.apps.googleusercontent.com">
-            <BrowserRouter>
-                <Container maxwidth="xl">
-                        <Navbar />
-                        <Switch>
-                            <Route path="/" exact component={() => <Redirect to="/posts" />} />
-                            <Route path="/posts" exact component={Home} />
-                            <Route path="/posts/search" exact component={Home} />
-                            <Route path="/posts/:id" component={PostDetails}/>
-                            {console.log(user)}
-                            <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
-                        </Switch>
-                    </Container>
-            </BrowserRouter>
-        </GoogleOAuthProvider>
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <GoogleOAuthProvider clientId="649002992069-8qglqg6qouog2s89kj716ljln33segta.apps.googleusercontent.com">
+                <BrowserRouter>
+                    <Container maxwidth="xl">
+                            <Navbar mode={darkMode} change={() => setDarkMode(!darkMode)}/>
+                            <Switch>
+                                <Route path="/" exact component={() => <Redirect to="/posts" />} />
+                                <Route path="/posts" exact component={Home} />
+                                <Route path="/posts/search" exact component={Home} />
+                                <Route path="/posts/:id" component={PostDetails}/>
+                                <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
+                            </Switch>
+                        </Container>
+                </BrowserRouter>
+            </GoogleOAuthProvider>
+        </ThemeProvider>
     )
 }
 

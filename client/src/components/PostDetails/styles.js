@@ -4,6 +4,10 @@ export default makeStyles((theme) => ({
   media: {
     borderRadius: '20px',
     objectFit: 'cover',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: '100%',
+    },
     width: '50vh',
     height: '50vh',
     maxHeight: '600px',
