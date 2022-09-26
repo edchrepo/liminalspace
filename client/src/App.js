@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, CssBaseline } from '@material-ui/core'
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
+import { createTheme, ThemeProvider } from '@material-ui/core/styles'
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
@@ -13,7 +13,7 @@ const App = () => {
     const user = JSON.parse(localStorage.getItem('profile'));
     const [darkMode, setDarkMode] = useState(true)
 
-    const theme=createMuiTheme({
+    const theme=createTheme({
         palette: {
             type: darkMode ? "dark" : "light",
         }
@@ -31,7 +31,7 @@ const App = () => {
                                 <Route path="/posts" exact component={Home} />
                                 <Route path="/posts/search" exact component={Home} />
                                 <Route path="/posts/:id" component={PostDetails}/>
-                                <Route path="/auth" exact component={() => (!user ? <Auth /> : <Redirect to="/posts" />)} />
+                                <Route path="/auth" exact component={Auth}/>
                             </Switch>
                         </Container>
                 </BrowserRouter>
