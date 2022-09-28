@@ -12,6 +12,7 @@ import useStyles from './styles';
 const Navbar = ( { mode, change} ) => {
     const classes = useStyles();
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+    const [isHover, setIsHover] = useState(false);
     const dispatch = useDispatch();
     const history = useHistory();
     const location = useLocation();
@@ -35,6 +36,16 @@ const Navbar = ( { mode, change} ) => {
         setUser(JSON.parse(localStorage.getItem('profile')))
     }, [location]);
 
+    const handleMouseEnter = () => {
+        setIsHover(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHover(false);
+    };
+
+    const openProfile = () => history.push(`/profile/${user?.result?.given_name.replace(/\s/g, '')}`);
+
     return (
         <AppBar className={classes.appBar} position="static" color="inherit">
         <Link to="/" className={classes.brandContainer}>
@@ -51,7 +62,19 @@ const Navbar = ( { mode, change} ) => {
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>
-                    <Avatar className={classes.purple} alt={user.result.picture} src={user.result.picture}>
+                    {/* <Avatar className={classes.purple} alt={user.result.picture} src={user.result.picture}>
+                        {!user.result.picture && <PersonIcon />}
+                    </Avatar> */}
+                    <Avatar
+                        style={{
+                            cursor: 'pointer',
+                            backgroundColor: isHover ? 'gray' : 'white',
+                        }}
+                        alt={user.result.picture} src={user.result.picture}
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={openProfile}
+                        >
                         {!user.result.picture && <PersonIcon />}
                     </Avatar>
                     <Typography className={classes.userName} variant="h6">{user.result.given_name}</Typography>
