@@ -68,7 +68,7 @@ const Navbar = ( { mode, change} ) => {
                     <Avatar
                         style={{
                             cursor: 'pointer',
-                            backgroundColor: isHover ? 'gray' : 'white',
+                            backgroundColor: isHover ? 'gray' : 'lightgray',
                         }}
                         alt={user.result.picture} src={user.result.picture}
                         onMouseEnter={handleMouseEnter}
