@@ -27,14 +27,14 @@ export const getPosts = async (req, res) => {
 //query used for queries (search), params used for getting specific resource
 
 export const getPostsBySearch = async (req, res) => {
-    const { searchQuery, tags } = req.query
+    const { searchQuery, tags, name } = req.query
 
     try {
         const title = new RegExp(searchQuery, 'i'); // Test test TEST -> test ('i' ignore case)
 
         //find title or tags with $or
         //is one of the tags in the array of tags equal to our tags
-        const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } } ]});
+        const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } }, { name: name } ]});
 
         //send res back to frontend
         res.json({ data: posts });
