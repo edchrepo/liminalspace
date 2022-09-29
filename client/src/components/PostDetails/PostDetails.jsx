@@ -19,9 +19,11 @@ const PostDetails = () => {
         dispatch(getPost(id));
     }, [id])
 
+    //if post id changes, change recommended posts
     useEffect(() => {
         if(post) {
             dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',')}))
+            // dispatch(getPostsBySearch({ search: 'none', name: "Eddu" }))
         }
     }, [post])
 
