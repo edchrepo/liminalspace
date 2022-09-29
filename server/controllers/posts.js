@@ -32,7 +32,7 @@ export const getPostsBySearch = async (req, res) => {
     try {
         const title = new RegExp(searchQuery, 'i'); // Test test TEST -> test ('i' ignore case)
 
-        //find title or tags with $or
+        //find title or tags or name with $or
         //is one of the tags in the array of tags equal to our tags
         const posts = await PostMessage.find({ $or: [ { title }, { tags: { $in: tags.split(',') } }, { name: name } ]});
 
