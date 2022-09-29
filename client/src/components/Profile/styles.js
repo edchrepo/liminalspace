@@ -3,18 +3,17 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles((theme) => ({
   media: {
     borderRadius: '20px',
-    objectFit: 'cover',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
-      height: '100%',
+      width: '50%',
+      height: '50%',
     },
-    width: '50vh',
-    height: '50vh',
+    width: '25vh',
+    height: '25vh',
     maxHeight: '600px',
 
   },
   card: {
-    display: 'flex',
+    textAlign: 'center',
     width: '100%',
     [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap',
