@@ -46,3 +46,18 @@ export const signup = async (req, res) => {
     }
 }
 
+export const updateUser = async (req, res) => {
+    const { data } = req.body;
+    const image = JSON.parse(data);
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(req.userId, { selectedFile: image });
+
+        const token = req.headers.authorization.split(" ")[1];
+        
+        res.status(200).json({ result: updatedUser, token });
+    } catch (error) {
+        res.status(500).json({ message: 'Error update user 500.' })
+    }
+}
+
