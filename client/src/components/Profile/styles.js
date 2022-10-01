@@ -46,4 +46,11 @@ export default makeStyles((theme) => ({
   commentsInnerContainer: {
     height: '200px', overflowY: 'auto', marginRight: '30px',
   },
+  fileInput: {
+    width: '100%',
+    marginLeft: '3%',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: '10%',
+    },
+  },
 }));

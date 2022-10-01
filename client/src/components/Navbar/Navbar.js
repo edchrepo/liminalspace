@@ -62,15 +62,13 @@ const Navbar = ( { mode, change} ) => {
         <Toolbar className={classes.toolbar}>
             {user ? (
                 <div className={classes.profile}>
-                    {/* <Avatar className={classes.purple} alt={user.result.picture} src={user.result.picture}>
-                        {!user.result.picture && <PersonIcon />}
-                    </Avatar> */}
                     <Avatar
                         style={{
                             cursor: 'pointer',
                             backgroundColor: isHover ? 'gray' : 'lightgray',
                         }}
-                        alt={user.result.picture} src={user.result.picture}
+                        alt={user.result.picture} src={user.result.picture || user.result.selectedFile}
+                        referrerpolicy="no-referrer"
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={openProfile}
