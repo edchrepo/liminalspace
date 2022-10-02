@@ -37,7 +37,9 @@ const Profile = () => {
             <div className={classes.card}>
                 <Typography variant="h3" component="h2">{user?.result?.given_name}</Typography>
                 <Divider style={{ margin: '20px 0' }} />
-                <img className={classes.media} src={user?.result?.picture 
+                <img className={classes.media} 
+                    referrerPolicy="no-referrer"
+                    src={user?.result?.picture 
                     || user?.result?.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={"profile"} />
                 {!user?.result?.aud && <div className={classes.fileInput}>
                     <FileBase   

@@ -67,8 +67,8 @@ const Navbar = ( { mode, change} ) => {
                             cursor: 'pointer',
                             backgroundColor: isHover ? 'gray' : 'lightgray',
                         }}
-                        alt={user.result.picture} src={user.result.picture || user.result.selectedFile}
                         referrerPolicy="no-referrer"
+                        alt={user.result.picture} src={user.result.picture || user.result.selectedFile}
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={openProfile}
