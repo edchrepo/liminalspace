@@ -68,7 +68,7 @@ const Navbar = ( { mode, change} ) => {
                             backgroundColor: isHover ? 'gray' : 'lightgray',
                         }}
                         alt={user.result.picture} src={user.result.picture || user.result.selectedFile}
-                        referrerpolicy="no-referrer"
+                        referrerPolicy="no-referrer"
                         onMouseEnter={handleMouseEnter}
                         onMouseLeave={handleMouseLeave}
                         onClick={openProfile}

@@ -11,7 +11,6 @@ import Auth from './components/Auth/Auth'
 import Profile from './components/Profile/Profile'
 
 const App = () => {
-    const user = JSON.parse(localStorage.getItem('profile'));
     const [darkMode, setDarkMode] = useState(true)
 
     const theme=createTheme({
