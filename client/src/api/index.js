@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+const API = axios.create({ baseURL: 'https://liminalproject.herokuapp.com/' });
 
 //happens to each request, happens before every req on the bottom
 API.interceptors.request.use((req) => {
