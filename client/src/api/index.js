@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://liminalproject.herokuapp.com/' });
+const API = axios.create({ baseURL: 'https://cyan-victorious-clam.cyclic.app/' });
 
 //happens to each request, happens before every req on the bottom
 API.interceptors.request.use((req) => {
