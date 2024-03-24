@@ -14,6 +14,7 @@ const Paginate = ({ page }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        // when page number changes, re-renders next page of posts in Home
         if(page) dispatch(getPosts(page));
     }, [page])
 

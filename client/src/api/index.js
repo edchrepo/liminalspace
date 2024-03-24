@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'https://cyan-victorious-clam.cyclic.app/' });
+// const API = axios.create({ baseURL: 'https://cyan-victorious-clam.cyclic.app/' });
+const API = axios.create({ baseURL: 'http://localhost:5000/' });
 
 //happens to each request, happens before every req on the bottom
 API.interceptors.request.use((req) => {
@@ -13,7 +14,8 @@ API.interceptors.request.use((req) => {
     return req;
 })
 
-//sending to endposts ex:localhost:300/posts
+//creating frontend functions from backend functions. API.get(xyz) is getting data from localhost:5000/xyz.
+//sending to endposts ex:localhost:3000/posts
 export const fetchPost = (id) => API.get(`/posts/${id}`);
 export const fetchPosts = (page) => API.get(`/posts?page=${page}`);
 export const fetchPostsBySearch = 
